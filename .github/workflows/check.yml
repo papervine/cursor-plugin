@@ -1,0 +1,20 @@
+# The plugin is prose and JSON — nothing to build, nothing to install. What CAN be wrong is
+# structural, and all of it is silent: a manifest Cursor can't parse looks exactly like a plugin
+# nobody installed, and a skill routing to a renamed reference file reads to the agent as
+# "nothing more to know". So the gate is a structure check, and it needs no dependencies.
+name: Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/check-plugin.mjs

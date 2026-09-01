@@ -116,9 +116,12 @@ discover it page by page.
 
 ## Contributing
 
-This repository is **published from the Papervine monorepo** and is one-directional: changes
-made here would be reverted by the next publish. Open an issue instead, or a pull request that a
-maintainer can port upstream — authorship is preserved when they do.
+Pull requests welcome — see [CONTRIBUTING.md](CONTRIBUTING.md). `node scripts/check-plugin.mjs`
+runs the same structure check CI does, with nothing to install.
+
+If the plugin tells you something Papervine doesn't do, that's a bug in the same sense a broken
+component is. The most useful report is what the agent produced, what Papervine actually does,
+and which file said otherwise.
 
 ## License
 

@@ -1,41 +1,43 @@
 # Contributing
 
-Thanks for being here. One thing is worth knowing before you spend time on a change.
+Pull requests are welcome and get merged here. This repository is the source of truth for the
+plugin — there is nothing to sync it with and nothing to port upstream.
 
-## PRs are reviewed here, but merged upstream
+## Running the checks
 
-> Nobody clicks "Merge" on this repository — a merge here would be reverted by the next sync.
-> An accepted PR is applied to the Papervine monorepo instead, and the next sync carries it
-> back out.
+```bash
+node scripts/check-plugin.mjs
+```
 
-This repo is a **generated mirror**. The files live in the monorepo as `agent-context/`, because
-this plugin *documents* the renderer: its component set, its `docs.json` handling, its CLI
-flags. Keeping the two in one repository means "add a component, update the skill" is a single
-reviewable change, and the reference can't quietly describe a version of Papervine that no
-longer exists.
+No install step; it's plain Node against the files in the repo. CI runs the same command on
+every push and pull request. It verifies the things that fail silently: the manifest parses,
+every MCP server has a URL, every rules file has frontmatter, every skill has `name` and
+`description`, and the `SKILL.md` reference index and the `reference/` directory agree in both
+directions.
 
-**Your commit authorship is preserved.** When your change is applied upstream it keeps you as
-the author, so the commit that lands here is credited to you and counts toward your GitHub
-contribution graph. When we close your PR we'll link the commit.
+## Trying a change before you send it
 
-We know a closed PR reads worse than a merged one. It's the honest trade for keeping the
-reference versioned alongside the code it describes.
+Install the plugin from a local path in Cursor (**Customize → Plugins**), point it at your
+clone, and open a Papervine docs repo. The useful test is whether the agent stops guessing:
+ask it something the change is meant to cover and see whether it now gets it right without
+being told.
 
 ## What makes a good change
 
-- **Correct beats complete.** The whole value of this plugin is that an agent stops guessing. A
+- **Correct beats complete.** The whole value here is that an agent stops inventing things. A
   documented behavior that doesn't match the renderer is worse than an undocumented one,
   because it gets acted on with confidence.
 - **Verify against a running site.** `npx papervine@latest dev` in a docs folder renders the
   real thing. If you're describing a prop, render it first.
-- **Say what doesn't work, too.** The `Fields that do not exist` and `These commands do not
-  exist` sections earn their place — they stop an agent inventing a plausible-looking option.
+- **Say what doesn't work, too.** The "Fields that do not exist" and "These commands do not
+  exist" sections earn their place — they stop an agent reaching for a plausible-looking option
+  that another docs platform has and Papervine doesn't.
 - **Keep the core file short.** `skills/papervine/SKILL.md` loads on every task; the
   `reference/` files load only when the task needs them. New detail belongs in a reference
-  file, and the core file should route to it.
-- **Every `reference/*.md` must be named in the SKILL.md index**, and every file the index names
-  must exist. A file nothing routes to is a file no agent reads, and both directions are
-  checked before publishing.
+  file, and the core should route to it.
+- **Every `reference/*.md` must be named in the SKILL.md index**, and every file the index
+  names must exist. A file nothing routes to is a file no agent reads. The check enforces both
+  directions.
 
 ## Reporting a problem
 
