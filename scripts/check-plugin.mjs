@@ -17,6 +17,8 @@ import { fileURLToPath } from "node:url";
  *   - `mcp.json` parses and every server has a `url` (or a `command`, for a stdio server)
  *   - every rules file has frontmatter — without it Cursor can't scope the rule
  *   - every skill directory holds a `SKILL.md` with `name` + `description` frontmatter
+ *   - every command and agent file carries the same frontmatter
+ *   - the manifest's `logo` resolves, and its `name` is the kebab-case Cursor requires
  *   - the SKILL.md reference index and the `reference/` directory agree **in both directions**
  *
  * That last one is the rule that earns its keep: a file nothing routes to is a file no agent
@@ -41,6 +43,17 @@ export function checkCursorPlugin(dir) {
     try {
       const manifest = JSON.parse(read(manifestPath));
       if (!manifest.name) problems.push(`${manifestPath} has no "name"`);
+      // Cursor's own validator requires a lowercase kebab-case name; a capital here is
+      // rejected at submission rather than at install, which is a slow way to find out.
+      if (manifest.name && !/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$/.test(manifest.name)) {
+        problems.push(`${manifestPath} "name" must be lowercase kebab-case`);
+      }
+      if (!manifest.displayName) problems.push(`${manifestPath} has no "displayName"`);
+      // A logo path that doesn't resolve is a broken image on the marketplace listing — the
+      // one place a plugin gets judged before anyone installs it.
+      if (manifest.logo && !existsSync(path.join(dir, manifest.logo))) {
+        problems.push(`${manifestPath} "logo" points at ${manifest.logo}, which does not exist`);
+      }
     } catch (err) {
       problems.push(`${manifestPath} does not parse: ${err.message}`);
     }
@@ -69,6 +82,27 @@ export function checkCursorPlugin(dir) {
   for (const file of rules) {
     if (!read(path.join("rules", file)).startsWith("---\n")) {
       problems.push(`rules/${file} has no frontmatter — Cursor can't scope it`);
+    }
+  }
+
+  // --- Commands and agents -----------------------------------------------
+  // Both are plain Markdown with frontmatter. Cursor lists them by `name` + `description`, so
+  // a file missing either is shipped but never offered to anyone.
+  for (const kind of ["commands", "agents"]) {
+    const kindDir = path.join(dir, kind);
+    if (!existsSync(kindDir)) continue;
+    for (const file of readdirSync(kindDir).filter((f) => f.endsWith(".md"))) {
+      const src = read(path.join(kind, file));
+      if (!src.startsWith("---\n")) {
+        problems.push(`${kind}/${file} has no frontmatter`);
+        continue;
+      }
+      const frontmatter = src.slice(4, src.indexOf("\n---", 4));
+      for (const field of ["name", "description"]) {
+        if (!new RegExp(`^${field}:\\s*\\S`, "m").test(frontmatter)) {
+          problems.push(`${kind}/${file} frontmatter has no "${field}"`);
+        }
+      }
     }
   }
 

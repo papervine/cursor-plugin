@@ -23,6 +23,9 @@ The skill covers:
 - **API docs** — OpenAPI and AsyncAPI setup, generated endpoint pages, the Try it playground,
   security requirements, and hand-written API pages
 - **CLI** — `papervine new`, `dev`, and `serve`, their flags, and serving a site in production
+- **The traps** — a `gotchas.md` collecting everything that renders as *something* instead of
+  failing, which is most of what goes wrong on a renderer built never to break a page
+- **Commands** — `/papervine-audit`, `/papervine-page`, `/papervine-migrate`
 
 It also spells out the things an agent otherwise guesses wrong: which config keys are accepted
 but not yet acted on, that icons resolve **Lucide** names only, that `"hidden": true` on a tab
@@ -88,11 +91,20 @@ them.
 
 | Reference file | Contents |
 |----------------|----------|
-| `reference/components.md` | Every component's syntax, props, and examples; author-defined React components; snippets |
-| `reference/configuration.md` | The full `docs.json` schema, themes, frontmatter fields, hiding pages, reader access, `llms.txt`, `skill.md` |
-| `reference/navigation.md` | Navigation patterns and what each division actually renders |
-| `reference/api-docs.md` | OpenAPI/AsyncAPI setup, generated pages, playground, hand-written API pages |
-| `reference/cli.md` | CLI commands, flags, production serving, trust model |
+| `reference/components.md` | Every component, its props, and the two forms `<Tree>` accepts; author-defined React components; snippets |
+| `reference/docs-json.md` | The one config file: themes, colors, branding, banner, SEO, `llms.txt`, `skill.md`, and the frontmatter table |
+| `reference/navigation.md` | Groups, tabs, anchors, versions — and what each division actually renders |
+| `reference/api-reference.md` | OpenAPI/AsyncAPI setup, generated pages, the playground, hand-written API pages |
+| `reference/cli.md` | `new`, `dev`, `serve`, their flags, production serving, trust model |
+| `reference/gotchas.md` | The things that render as *something* rather than failing — read before concluding a site is broken |
+
+## Commands included
+
+| Command | What it does |
+|---------|--------------|
+| `/papervine-audit` | Sweeps a docs repo for the mistakes that fail silently — unreachable pages, dead nav entries, unresolvable icons, relative links, config keys that do nothing |
+| `/papervine-page` | Adds a page: frontmatter, a shape matching its neighbours, and the `docs.json` entry people forget |
+| `/papervine-migrate` | Assesses a docs repo from another platform — what renders unchanged, what renders differently, what does nothing |
 
 ## Rules included
 

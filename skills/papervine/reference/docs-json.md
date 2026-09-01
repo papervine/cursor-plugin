@@ -291,7 +291,7 @@ Malformed frontmatter degrades to a body-only page rather than an error.
 
 - **`mode`** — there is no per-page layout switch (`wide`, `custom`, `frame`, `center`).
 - **`openapi` / `api`** — a page cannot declare itself an endpoint page. Endpoint pages come
-  from a navigation division pointing at a spec; see `api-docs.md`.
+  from a navigation division pointing at a spec; see `api-reference.md`.
 - **`searchable`, `boost`, `deprecated`, `related`** — not read.
 
 ## Hiding pages

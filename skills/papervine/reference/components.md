@@ -66,7 +66,7 @@ Six variants, each signalling a different intent. All take children only.
 ## Banner
 
 A prominent announcement bar. Inline on one page as a component, or site-wide via the
-`banner` key in `docs.json` (see `configuration.md`) — both render the same thing.
+`banner` key in `docs.json` (see `docs-json.md`) — both render the same thing.
 
 ```mdx
 <Banner type="warning" dismissible>

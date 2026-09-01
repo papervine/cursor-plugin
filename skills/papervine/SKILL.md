@@ -18,11 +18,12 @@ The files below live in the `reference/` directory next to this one.
 
 | File | When to read |
 |------|-------------|
-| `reference/components.md` | Adding or modifying components (callouts, cards, steps, tabs, code groups, accordions, frames, badges, icons, tooltips, trees, colors, updates, prompts, panels, views, mermaid) — full props for each. |
-| `reference/configuration.md` | Changing `docs.json` (theme, colors, logo, favicon, appearance, navbar, banner, SEO) or page frontmatter. Also snippets, hidden pages, reader-auth gating, `llms.txt`, `skill.md`, and which keys are accepted but not yet acted on. |
-| `reference/navigation.md` | Modifying navigation structure (groups, tabs, anchors, dropdowns, versions, languages) or adding an OpenAPI reference to the nav. |
-| `reference/api-docs.md` | Setting up API documentation (OpenAPI/AsyncAPI, endpoint pages, the Try it playground, manual API pages). |
-| `reference/cli.md` | Running the CLI (`papervine new`, `dev`, `serve`) and serving a site in production. |
+| `reference/components.md` | Writing page content — every component, its props, and the two input forms `<Tree>` takes. Also author-defined React components and snippets. |
+| `reference/docs-json.md` | Changing the site's one config file: themes, colors, logo, favicon, appearance, navbar, banner, SEO, `llms.txt`, `skill.md`, and the full frontmatter table. |
+| `reference/navigation.md` | Changing what the sidebar shows — groups, tabs, anchors, dropdowns, versions, languages — and how an OpenAPI spec becomes nav entries. |
+| `reference/api-reference.md` | Wiring up an OpenAPI or AsyncAPI spec, or hand-writing an API page. |
+| `reference/cli.md` | Running `papervine new`, `dev` or `serve`, or serving a site in production. |
+| `reference/gotchas.md` | **Before concluding something is broken, or that a config key should be deleted.** The things that render as *something* rather than failing: silently ignored fields, unresolvable icons, the two spellings of the index page. |
 
 ## MCP servers
 
@@ -152,7 +153,7 @@ Any key containing a colon (`og:image`, `twitter:card`) is emitted as a `<meta>`
 overriding the site-wide value. Unknown keys are ignored rather than erroring.
 
 There is **no `mode` field** and **no page-level `openapi`/`api` field** — endpoint pages come
-from a navigation division that points at a spec. See `reference/api-docs.md`.
+from a navigation division that points at a spec. See `reference/api-reference.md`.
 
 ## Quick component reference
 

@@ -148,7 +148,7 @@ They render as labelled sidebar sections, like groups.
 ```
 
 Off-site links belong in `navbar.links` (or `navbar.primary` for the emphasised button) — see
-`configuration.md`.
+`docs-json.md`.
 
 `navigation.global` is parsed but not rendered. Put the divisions directly on `navigation`.
 
@@ -211,7 +211,7 @@ A selector matching no operation in the spec is dropped silently. Supplying `pag
 the tag grouping — you get exactly the entries you listed, in that order.
 
 More than one spec can be referenced; every `openapi` value found anywhere in the tree is
-loaded. See `api-docs.md`.
+loaded. See `api-reference.md`.
 
 ## Diagnosing a nav problem
 
@@ -231,4 +231,4 @@ wrapper renders.
 comma is the usual culprit. `papervine dev` surfaces it immediately.
 
 **An unfamiliar key.** Unknown fields are ignored with a warning rather than failing the build.
-Some keys are accepted but not yet acted on; `configuration.md` lists them.
+Some keys are accepted but not yet acted on; `docs-json.md` lists them.

@@ -1,7 +1,8 @@
 {
   "name": "papervine",
-  "version": "0.1.0",
-  "description": "Complete reference for building Papervine docs sites — components, docs.json, navigation, API references, and the CLI.",
+  "displayName": "Papervine",
+  "version": "0.2.0",
+  "description": "Write and ship Papervine docs from Cursor — the component set, the docs.json surface, the CLI, and the traps, taken from the renderer's own source.",
   "author": {
     "name": "Papervine",
     "email": "support@papervine.io"
@@ -12,6 +13,6 @@
     "type": "git",
     "url": "https://github.com/papervine/cursor-plugin.git"
   },
-  "keywords": ["papervine", "docs", "documentation", "mdx", "docs.json"],
-  "skills": "./skills/"
+  "keywords": ["cursor", "plugin", "papervine", "docs", "mdx", "docs.json", "skills", "commands", "mcp"],
+  "logo": "assets/logo.svg"
 }
